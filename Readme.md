@@ -11,6 +11,6 @@ A properties file is added to generalise the scripts and improve flexibility.</h
 - If valid, downloads the zip file and extracts it to the tomcat folder.
 
 #3. <i>Download the zip file</i> from a seperate location and install <i>if no access to internet.</i>
-- unzips the existing zip file in another location(Preferrably a repositry.)
+- unzips the existing zip file in another location.
 
 <b>This script installs Tomcat as a service</b>

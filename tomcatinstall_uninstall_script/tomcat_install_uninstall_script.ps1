@@ -1,4 +1,6 @@
-﻿#Uninstalltomcat
+﻿#-------------------------------------------------------------
+#------------------Uninstall tomcat----------------------------
+#--------------------------------------------------------------
 function uninstallTomcat($path){
 
     
@@ -32,10 +34,12 @@ function uninstallTomcat($path){
 
 
 
+#---------------------------------------------------------------------------
+#----------------install apache tomcat-------------------------------------
+#---------------------------------------------------------------------------
 
-#install apache tomcat
 
-#downloading 
+#downloading Zip File
 function installtomcat($url,$tomcatversion,$destination,$unzip_destination,$port ){
 
 $status= wget $url -UseBasicParsing|% {$_.StatusCode}
@@ -49,7 +53,9 @@ Invoke-WebRequest -uri $url -OutFile $destination
     Write-Verbose "ready to extract"
     Write-Verbose "extracting files...."
     }
-#installing
+
+#Extract Zip file and install
+
 Expand-Archive -LiteralPath $destination -DestinationPath $unzip_destination -Force
     if( Test-path $unzip_destination\$tomcatversion)
     {
@@ -59,8 +65,8 @@ Expand-Archive -LiteralPath $destination -DestinationPath $unzip_destination -Fo
     {
     Write-Verbose "File extraction failed. Please check the path is correct"
     }
-#port change
 
+#port change
 (Get-Content "$unzip_destination\$tomcatversion\conf\server.xml").replace('8080',$port)|Set-Content "$unzip_destination\$tomcatversion\conf\server.xml"
 } 
 

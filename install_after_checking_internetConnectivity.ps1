@@ -60,8 +60,8 @@ function uninstallTomcat ($path) {
     {
       Write-Verbose "File extraction failed. Please check the path is correct"
     }
+    
     #port change
-  
     (Get-Content "$unzip_destination\$tomcatversion\conf\server.xml").Replace('8080',$port) | Set-Content "$unzip_destination\$tomcatversion\conf\server.xml"
   }
   
@@ -79,7 +79,8 @@ function uninstallTomcat ($path) {
   $servername = $output.servername
   Start-Transcript -Path $logpath
   uninstallTomcat "$unzip_destination/$tomcatversion"
-  #check server have internet access
+
+  #check server have internet access, if yes, download the zip file from the web
   if ((Test-Connection -ComputerName $servername -Quiet) -eq "True")
   {
     Write-Verbose "Server have Internet access"
@@ -90,6 +91,7 @@ function uninstallTomcat ($path) {
   {
     installtomcat $tomcatversion $destination $unzip_destination $port
   }
+
   #Install tomcat as service
   Set-Location -Path $unzip_destination\$tomcatversion\bin
   cmd.exe /c " service.bat install"
